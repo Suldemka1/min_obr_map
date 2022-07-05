@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="script.js"></script>
+    <script src="assets/geo/orgmap.js"></script>
+    <script src="assets/geo//kozhuun.js"></script>
+    <script src="https://mapgl.2gis.com/api/js/v1"></script>
+    <script src="https://unpkg.com/@2gis/mapgl-clusterer@^2/dist/clustering.js"></script>
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      #container {
+        width: 80vw;
+        height: 100vh;
+      }
+    </style>
+
+    <style>
+      html,
+      body,
+      #container {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+    </style>
+    <style>
+      .popup {
+        position: absolute;
+        transform: translate(-50%, -150%);
+        display: flex;
+        flex-direction: column;
+        min-width: 200px;
+      }
+      .popup-content {
+        padding: 10px;
+        border-radius: 4px;
+        background: #fff;
+        box-shadow: 0 1px 2px 0 rgba(38, 38, 38, 0.2);
+      }
+      .popup-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0 5px;
+        font-size: 12px;
+        cursor: pointer;
+      }
+      .popup-tip {
+        width: 0;
+        height: 0;
+        align-self: center;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+
+    <script>
+      mapInit();
+
+      marker = new mapgl.Marker(map, {
+        coordinates: [10, 50],
+        icon: "",
+      });
+
+      const popup = new mapgl.HtmlMarker(map, {
+        coordinates: marker.getCoordinates(),
+        html: `<div class="popup">
+                  <div class="popup-content">
+                    The click at the marker will open this popup again
+                  </div>
+                  <div class="popup-close">x</div>
+                  <div class="popup-tip"></div>
+              </div>`,
+      });
+
+      const popupHtml = popup.getContent();
+      hidePopup();
+
+      marker.on("click", () => (popupHtml.style.display = "block"));
+
+      popupHtml
+        .querySelector(".popup-close")
+        .addEventListener("click", hidePopup);
+      map.on("click", hidePopup);
+
+      function hidePopup() {
+        popupHtml.style.display = "none";
+      }
+    </script>
+  </body>
+</html>
