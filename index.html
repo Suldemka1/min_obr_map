@@ -7,6 +7,7 @@
     <script src="script.js"></script>
     <script src="assets/geo/orgmap.js"></script>
     <script src="assets/geo//kozhuun.js"></script>
+    <script src="init.js"></script>
     <script src="https://mapgl.2gis.com/api/js/v1"></script>
     <script src="https://unpkg.com/@2gis/mapgl-clusterer@^2/dist/clustering.js"></script>
     <title>Document</title>
@@ -68,36 +69,6 @@
 
     <script>
       mapInit();
-
-      marker = new mapgl.Marker(map, {
-        coordinates: [10, 50],
-        icon: "",
-      });
-
-      const popup = new mapgl.HtmlMarker(map, {
-        coordinates: marker.getCoordinates(),
-        html: `<div class="popup">
-                  <div class="popup-content">
-                    The click at the marker will open this popup again
-                  </div>
-                  <div class="popup-close">x</div>
-                  <div class="popup-tip"></div>
-              </div>`,
-      });
-
-      const popupHtml = popup.getContent();
-      hidePopup();
-
-      marker.on("click", () => (popupHtml.style.display = "block"));
-
-      popupHtml
-        .querySelector(".popup-close")
-        .addEventListener("click", hidePopup);
-      map.on("click", hidePopup);
-
-      function hidePopup() {
-        popupHtml.style.display = "none";
-      }
     </script>
   </body>
 </html>
